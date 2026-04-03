@@ -4,6 +4,7 @@ import shutil
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 from schemas import JobApplicationRequest, JobApplicationResponse
 from agents.orchestrator import run_pipeline
@@ -22,6 +23,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Mount static files for the frontend
+app.mount("/", StaticFiles(directory="frontend/out", html=True), name="frontend")
 
 UPLOAD_DIR = "uploads"
 OUTPUT_DIR = "outputs"

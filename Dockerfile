@@ -9,7 +9,12 @@ RUN apt-get update && apt-get install -y \
     g++ \
     libffi-dev \
     libssl-dev \
+    curl \
     && rm -rf /var/lib/apt/lists/*
+
+# Install Node.js
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y nodejs
 
 # Copy requirements first for better layer caching
 COPY requirements.txt .
@@ -20,6 +25,13 @@ RUN pip install --no-cache-dir --upgrade pip && \
 
 # Copy application code
 COPY . .
+
+# Build the frontend
+WORKDIR /app/frontend
+RUN npm install && npm run build
+
+# Move back to root
+WORKDIR /app
 
 # Create directories for uploads and outputs
 RUN mkdir -p uploads outputs

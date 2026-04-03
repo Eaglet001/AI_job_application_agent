@@ -24,9 +24,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Mount static files for the frontend
-app.mount("/", StaticFiles(directory="frontend/out", html=True), name="frontend")
-
 UPLOAD_DIR = "uploads"
 OUTPUT_DIR = "outputs"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
@@ -158,6 +155,10 @@ def download_cover_letter(request: JobApplicationRequest):
         media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
         filename="cover_letter.docx",
     )
+
+
+# Mount static files for the frontend (after all API routes)
+app.mount("/", StaticFiles(directory="frontend/out", html=True), name="frontend")
 
 
 # ── Run ───────────────────────────────────────────────────────────────────────

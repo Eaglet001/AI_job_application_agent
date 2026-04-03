@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: job-application-ai
+    env: docker
+    dockerfilePath: ./Dockerfile
+    plan: standard
+    healthCheckPath: /health
+    envVars:
+      - key: HF_TOKEN
+        scope: run
+        prompt: true

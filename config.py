@@ -6,7 +6,8 @@ load_dotenv()
 
 HF_TOKEN = os.getenv("HF_TOKEN")
 HF_MODEL_ID = "meta-llama/Llama-3.1-70B-Instruct"
-
+# explicitly point to .env file
+load_dotenv(dotenv_path="C:\\Users\\david\\OneDrive\\Desktop\\AI_CV_analizer\\.env")
 if not HF_TOKEN:
     raise ValueError("HF_TOKEN is not set in your .env file.")
 
